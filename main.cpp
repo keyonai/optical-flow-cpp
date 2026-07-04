@@ -141,11 +141,19 @@ void drawFlowArrows(cv::Mat& frame, const cv::Mat& flow, int step = 24) {
             int ex = std::clamp(px + (int)(dx * arrowScale), 0, frame.cols - 1);
             int ey = std::clamp(py + (int)(dy * arrowScale), 0, frame.rows - 1);
 
-            // Draw hot-pink arrow (BGR: 180, 105, 255)
+            // Color arrow to match the HSV flow map: hue = direction angle
+            float angleDeg = std::atan2(dy, dx) * (180.0f / (float)M_PI);
+            if (angleDeg < 0) angleDeg += 360.0f;
+            uint8_t hue = (uint8_t)(angleDeg / 2.0f);   // OpenCV HSV hue: 0-180
+            cv::Mat hsv(1, 1, CV_8UC3, cv::Scalar(hue, 255, 255));
+            cv::Mat bgr;
+            cv::cvtColor(hsv, bgr, cv::COLOR_HSV2BGR);
+            cv::Vec3b c = bgr.at<cv::Vec3b>(0, 0);
+
             cv::arrowedLine(frame,
                 cv::Point(px, py),
                 cv::Point(ex, ey),
-                cv::Scalar(180, 105, 255),   // hot pink
+                cv::Scalar(c[0], c[1], c[2]),
                 1, cv::LINE_AA, 0, 0.35);
         }
     }
