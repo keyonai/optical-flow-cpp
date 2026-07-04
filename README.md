@@ -1,6 +1,6 @@
 # Optical Flow Visualization (C++ / LibTorch)
 
-Real-time optical flow estimation using the RAFT-small deep learning model, loaded in C++ via LibTorch (PyTorch's C++ API). Visualizes motion as hot-pink directional arrows and an HSV color map — hue encodes direction, brightness encodes speed.
+Real-time optical flow estimation using the RAFT-small deep learning model, loaded in C++ via LibTorch (PyTorch's C++ API). Visualizes motion as directional arrows and an HSV color map — hue encodes direction, brightness encodes speed.
 
 ## What it does
 
